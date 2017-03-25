@@ -11,6 +11,7 @@ RUN \
 yum -q -y update && \
 # yum -q -y --nogpgcheck install sudo && \
 # yum -q -y --nogpgcheck install httpd && \
+yum -q -y --nogpgcheck install git && \
 yum -q -y --nogpgcheck install openssh-clients && \
 yum -q -y --nogpgcheck install unzip && \
 yum -q -y --nogpgcheck install telnet && \
