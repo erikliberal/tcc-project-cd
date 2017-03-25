@@ -17,10 +17,9 @@ yum -q -y --nogpgcheck install unzip && \
 yum -q -y --nogpgcheck install telnet && \
 yum -q -y --nogpgcheck install java-1.8.0-openjdk && \
 yum -q -y --nogpgcheck install go-server && \
-yum clean all && \
+yum clean all
 # systemctl enable httpd.service && \
 # systemctl start httpd.service
-echo
 
 EXPOSE 8153 8154
 
@@ -28,7 +27,7 @@ ENV LANG=en_US.utf8
 
 USER go
 
-RUN ssh-keygen -f "${HOME}/.ssh/id_rsa" -N ""
+RUN ssh-keygen -q -f "${HOME}/.ssh/id_rsa" -N ""
 
 # CMD ["/usr/sbin/init"]
 CMD ["/etc/init.d/go-server start"]
