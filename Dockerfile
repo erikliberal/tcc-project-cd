@@ -26,5 +26,9 @@ EXPOSE 8153 8154
 
 ENV LANG=en_US.utf8
 
+USER go
+
+RUN ssh-keygen -f "${HOME}/.ssh/id_rsa" -N ""
+
 # CMD ["/usr/sbin/init"]
 CMD ["/etc/init.d/go-server"]
