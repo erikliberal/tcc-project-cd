@@ -11,12 +11,13 @@ RUN \
 yum -q -y update && \
 # yum -q -y --nogpgcheck install sudo && \
 # yum -q -y --nogpgcheck install httpd && \
-yum -q -y --nogpgcheck install git && \
 yum -q -y --nogpgcheck install openssh-clients && \
+yum -q -y --nogpgcheck install java-1.8.0-openjdk && \
+yum -q -y --nogpgcheck install git && \
 yum -q -y --nogpgcheck install unzip && \
 yum -q -y --nogpgcheck install telnet && \
-yum -q -y --nogpgcheck install java-1.8.0-openjdk && \
 yum -q -y --nogpgcheck install go-server && \
+yum -q -y --nogpgcheck install go-agent && \
 yum clean all
 # systemctl enable httpd.service && \
 # systemctl start httpd.service
@@ -27,7 +28,12 @@ ENV LANG=en_US.utf8
 
 USER go
 
-RUN ssh-keygen -q -f "${HOME}/.ssh/id_rsa" -N ""
+RUN ssh-keygen -q -f "${HOME}/.ssh/id_rsa" -N "" && cat "${HOME}/.ssh/id_rsa.pub"
 
-# CMD ["/usr/sbin/init"]
-CMD ["/etc/init.d/go-server start"]
+USER root
+
+ADD entrypoint.sh /usr/local/sbin/entrypoint
+
+RUN chmod 0755 /usr/local/sbin/entrypoint
+
+CMD ["/usr/local/sbin/entrypoint"]

@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build --rm -t local/go-cd-server .
+docker build -q --force-rm=true --rm=true -t local/go-cd-server .
