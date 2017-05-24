@@ -1,4 +1,4 @@
-From centos:7
+From erikliberal/jdk8:latest
 
 MAINTAINER "Erik Liberal" <erik.liberal@gmail.com>
 ENV container docker
@@ -6,13 +6,12 @@ ENV container docker
 ADD gocd.repo /etc/yum.repos.d/gocd.repo
 
 RUN \
-# groupadd -g 1000 go && \
-# useradd -D -u 1000 -G go go && \
+groupadd -g 1000 go && \
+useradd -D -u 1000 -G go go && \
 yum -q -y update && \
 # yum -q -y --nogpgcheck install sudo && \
 # yum -q -y --nogpgcheck install httpd && \
 yum -q -y --nogpgcheck install openssh-clients && \
-yum -q -y --nogpgcheck install java-1.8.0-openjdk && \
 yum -q -y --nogpgcheck install git && \
 yum -q -y --nogpgcheck install unzip && \
 yum -q -y --nogpgcheck install telnet && \
@@ -25,6 +24,16 @@ yum clean all
 EXPOSE 8153 8154
 
 ENV LANG=en_US.utf8
+#contains the binaries and database
+VOLUME /var/lib/go-server
+#contains the pipeline configuration files
+VOLUME /etc/go
+#contains the server logs
+VOLUME /var/log/go-server
+#contains the start script
+#VOLUME /usr/share/go-server
+#contains all the environment variables with default values. These variable values can be changed as per requirement.
+VOLUME /etc/default/go-server
 
 USER go
 
