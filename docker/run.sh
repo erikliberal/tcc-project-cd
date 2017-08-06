@@ -1,4 +1,9 @@
 #!/bin/bash
-#docker run --rm -d -p 8153:8153 -p 8154:8154 local/go-cd-server
-mkdir -p "$(pwd)/logs"
-docker run -d --rm -p 8153:8153 -p 8154:8154 -v "$(pwd)/logs":/var/log/go-server --name "gocd-server" erikliberal/gocd-server-instance
+JBOSS_FOLDER=/opt/jboss
+STANDALONE_FOLDER=$JBOSS_FOLDER/wildfly/standalone
+BUILD_FOLDER=$(pwd)/target
+mkdir -p "$BUILD_FOLDER/"{logs,deployments}
+docker run -d --rm --name wildfly -p 8080:8080 -p 9990:9990 \
+  -v "$BUILD_FOLDER/deployments":${STANDALONE_FOLDER}/deployments \
+  -v "$BUILD_FOLDER/logs":${STANDALONE_FOLDER}/log \
+  erikliberal/wildfly:latest

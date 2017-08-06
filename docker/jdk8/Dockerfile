@@ -1,13 +1,14 @@
-From centos:7
+FROM openjdk:8-jdk-alpine
+MAINTAINER Erik Liberal <erik.liberal@gmail.com>
 
-MAINTAINER "Erik Liberal" <erik.liberal@gmail.com>
-ENV container docker
+RUN addgroup -g 1000 jboss && \
+mkdir -p /opt/jboss && \
+adduser -D -u 1000 -G jboss -h /opt/jboss -s /sbin/nologin jboss && \
+chown jboss:jboss /opt/jboss && \
+chmod 755 /opt/jboss
+RUN apk update && \
+apk add curl
 
-RUN \
-yum -q -y update && \
-yum -q -y --nogpgcheck install java-1.8.0-openjdk && \
-yum clean all
+WORKDIR /opt/jboss
 
-ENV LANG=en_US.utf8
-
-CMD ["/usr/sbin/init"]
+USER jboss
