@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
 
-def verificaUpload(podeFazerUpload){
-  if ( podeFazerUpload ) {
-      echo 'pode fazer'
+def verificaAprovacao(aprovado, submitter, justificativa){
+  if ( aprovado ) {
+      error "Aprovado por $submitter devido a [$justificativa]"
   } else {
-      echo 'não pode fazer'
+      error "Rejeitado por $submitter devido a [$justificativa]"
   }
 }
 
@@ -21,17 +21,19 @@ pipeline {
               sh 'mvn clean install'
           }
         }
-        stage('Aguardando aprovação'){
+        stage('Aguardando aprovação de testes manuais'){
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    input message: 'Aprovar', parameters: [text(defaultValue: '-', description: '', name: 'justificativa'), booleanParam(defaultValue: false, description: '', name: 'aprovado')]
+                    input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
+                        text(defaultValue: '-', description: '', name: 'justificativa'),
+                        booleanParam(defaultValue: false, description: '', name: 'aprovado')
+                    ]
                 }
             }
         }
-        stage('Após aprovação') {
+        stage('Verifica aprovação') {
             steps {
-              verificaUpload(params.aprovado)
-              echo '-'
+              verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
             }
         }
     }
