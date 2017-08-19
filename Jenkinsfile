@@ -28,9 +28,10 @@ pipeline {
                 }
             }
         }
-        stage('Após aprovação'){
+        stage('Após aprovação') {
             steps {
               verificaUpload(params.aprovado)
+              echo '-'
             }
         }
     }
