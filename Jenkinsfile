@@ -1,7 +1,11 @@
 #!/usr/bin/env groovy
 
-def verificaAprovacao(complexObject){
-  echo "$complexObject"
+def verificaAprovacao(aprovacao){
+  if (aprovacao.aprovado){
+    echo "Build aprovado por $aprovacao.submitter com a justificativa [$aprovacao.justificativa]"
+  } else {
+    error "Build rejeitado por $aprovacao.submitter com a justificativa [$aprovacao.justificativa]"
+  }
 }
 
 pipeline {
