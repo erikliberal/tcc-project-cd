@@ -10,9 +10,9 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	    <version.hibernate>5.0.9.Final</version.hibernate>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <version.hibernate>5.0.9.Final</version.hibernate>
     </properties>
 
     <dependencyManagement>
@@ -129,5 +129,72 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>check</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>cobertura-maven-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>cobertura-check</id>
+                                    <phase>post-integration-test</phase>
+                                    <goals>
+                                        <goal>clean</goal>
+                                        <goal>check-integration-test</goal>
+                                    </goals>
+                                    <configuration>
+                                        <check>
+                                            <haltOnFailure>true</haltOnFailure>
+                                            <branchRate>85</branchRate>
+                                            <lineRate>85</lineRate>
+                                            <packageBranchRate>85</packageBranchRate>
+                                            <packageLineRate>85</packageLineRate>
+                                            <totalBranchRate>85</totalBranchRate>
+                                            <totalLineRate>85</totalLineRate>
+                                        </check>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>report</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>cobertura-maven-plugin</artifactId>
+                            <version>2.7</version>
+                            <executions>
+                                <execution>
+                                    <id>cobertura-reports</id>
+                                    <phase>integration-test</phase>
+                                    <goals>
+                                        <goal>cobertura-integration-test</goal>
+                                    </goals>
+                                    <configuration>
+                                        <formats>
+                                            <format>xml</format>
+                                            <format>html</format>
+                                        </formats>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
