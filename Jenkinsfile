@@ -2,9 +2,9 @@
 
 def verificaAprovacao(aprovado, submitter, justificativa){
   if ( aprovado ) {
-      error "Aprovado por $submitter devido a [$justificativa]"
+      error "Aprovado por ${submitter} devido a [${justificativa}]"
   } else {
-      error "Rejeitado por $submitter devido a [$justificativa]"
+      error "Rejeitado por ${submitter} devido a [${justificativa}]"
   }
 }
 
@@ -43,10 +43,10 @@ pipeline {
             echo "Ultima build durou ${currentBuild.durationString}"
         }
         success {
-            echo "Aprovado por ${params.aprovador} Justificativa \'${params.justificativa}\'"
+            echo "Aprovado por ${params.submitter} Justificativa \'${params.justificativa}\'"
         }
         failure {
-            echo "Rejeitado por ${params.aprovador} Justificativa \'${params.justificativa}\'"
+            echo "Rejeitado por ${params.submitter} Justificativa \'${params.justificativa}\'"
         }
         unstable {
             echo 'unstable'
