@@ -32,7 +32,7 @@ pipeline {
         stage('Build') {
           steps {
             parallel firstBranch: {
-              node {
+              node('linux') {
                 agent any
                 tools{
                   maven 'maven'
@@ -40,7 +40,7 @@ pipeline {
                 sh 'mvn clean package'
               }
             }, secondBranch: {
-              node {
+              node('linux') {
                 agent any
                 tools{
                   maven 'maven'
