@@ -10,9 +10,10 @@ def verificaAprovacao(aprovado, submitter, justificativa){
 }
 
 stage('Build') {
-  node {
-    tool name: 'maven', type: 'maven'
-    sh 'mvn install'
+  node('agent && linux') {
+    tool name: 'maven', type: 'maven' {
+      sh 'mvn install'
+    }
   }
 }
 
