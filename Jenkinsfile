@@ -11,8 +11,9 @@ def verificaAprovacao(aprovado, submitter, justificativa){
 
 stage('Build') {
   node {
-    tool name: 'maven', type: 'maven'
-    sh 'mvn install'
+    withMaven(maven: 'maven'){
+      sh 'mvn install'
+    }
   }
 }
 
