@@ -4,7 +4,7 @@ verificaAprovacao(aprovado, submitter, justificativa){
   if ( aprovado ) {
       echo "Aprovado por $submitter devido a [$justificativa]"
   } else {
-      error "Rejeitado por $submitter devido a [$justificativa]"
+      echo "Rejeitado por $submitter devido a [$justificativa]"
   }
 }
 
