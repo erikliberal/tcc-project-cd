@@ -1,11 +1,7 @@
 #!/usr/bin/env groovy
 
-def verificaAprovacao(aprovado, submitter, justificativa){
-  if ( aprovado ) {
-      echo "Aprovado por $submitter devido a [$justificativa]"
-  } else {
-      echo "Rejeitado por $submitter devido a [$justificativa]"
-  }
+def verificaAprovacao(complexObject){
+  echo "$complexObject"
 }
 
 pipeline {
@@ -23,13 +19,11 @@ pipeline {
         stage('Aguardando aprovação de testes manuais'){
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
+                    verificaAprovacao(input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
                         text(defaultValue: '-', description: '', name: 'justificativa'),
                         booleanParam(defaultValue: false, description: '', name: 'aprovado')
-                    ]
+                    ])
                 }
-                echo "$params"
-                echo "[$submitter] [$aprovado] [$justificativa]"
             }
         }
     }
