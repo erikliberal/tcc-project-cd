@@ -27,6 +27,11 @@ stage('Aguardando aprovação de testes manuais'){
 }
 
 stage('Verifica aprovação') {
+    node {
+      tool name: 'Default', type: 'git'
+      git status
+    }
+
     params.entrySet().each{key,value->println "[$key] $value"}
     echo "${params.aprovado}, ${params.submitter}, ${params.justificativa}"
     verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
