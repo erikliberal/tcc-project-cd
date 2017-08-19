@@ -19,10 +19,10 @@ pipeline {
         stage('Aguardando aprovação de testes manuais'){
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    verificaAprovacao(input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
+                    verificaAprovacao(input(message: 'Aprovar', submitterParameter: 'submitter', parameters: [
                         text(defaultValue: '-', description: '', name: 'justificativa'),
                         booleanParam(defaultValue: false, description: '', name: 'aprovado')
-                    ])
+                    ]))
                 }
             }
         }
