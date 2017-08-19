@@ -2,9 +2,9 @@
 
 def verificaAprovacao(aprovado, submitter, justificativa){
   if ( aprovado ) {
-      error "Aprovado por ${submitter} devido a [${justificativa}]"
+      error "Aprovado por $submitter devido a [$justificativa]"
   } else {
-      error "Rejeitado por ${submitter} devido a [${justificativa}]"
+      error "Rejeitado por $submitter devido a [$justificativa]"
   }
 }
 
@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Verifica aprovação') {
             steps {
-              verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
+              verificaAprovacao(aprovado: params.aprovado, submitter: params.submitter, justificativa: params.justificativa)
             }
         }
     }
