@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form>
+			<h:inputText value="#{requestScopedBean.texto}" />
+			<h:commandButton value="submit" action="#{requestScopedBean.execute}">
+				<p:ajax process="@form" update="@all" />
+			</h:commandButton>
+		</h:form>
+		
+		<h:form>
+			<fieldset>
+				<legend>Campos: <h:outputText value="#{requestScopedBean.text}" /></legend>
+				<h:inputHidden value="#{requestScopedBean.id}" />
+				<p:inputText placeholder="Codigo" value="#{requestScopedBean.code}" />
+				<p:inputText placeholder="Nome" value="#{requestScopedBean.name}" />
+				<ui:fragment rendered="#{not empty requestScopedBean.values}">
+					<h:selectOneMenu value="#{requestScopedBean.parentId}">
+						<f:selectItem noSelectionOption="true" itemLabel="Raiz"/>
+						<f:selectItems value="#{requestScopedBean.parents}" />
+					</h:selectOneMenu>
+				</ui:fragment>
+			</fieldset>
+			<h:commandButton value="Salvar" action="#{requestScopedBean.save}" />
+			<h:commandButton value="Reset" action="#{requestScopedBean.init}" immediate="true" />
+			
+		</h:form>
+		
+		<h:dataTable var="itm" value="#{requestScopedBean.values}">
+			<h:column>
+				<h:form>
+					<h:commandButton value="Edit #{itm.id}" action="#{requestScopedBean.edit(itm.id)}" />
+				</h:form>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Código</f:facet>
+				<h:outputText style="margin-left: #{itm.getDepth()*5}em" value="#{itm.code}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText style="margin-left: #{itm.getDepth()*5}em" value="#{itm.name}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Caminho</f:facet>
+				<h:outputText value="#{itm.getFullPath()}" />
+			</h:column>
+			
+		</h:dataTable>
+		
+	</ui:define>
+</ui:composition>
