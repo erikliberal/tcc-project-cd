@@ -29,7 +29,7 @@ pipeline {
               sh 'mvn clean install'
           }
         }
-        stage('Build') {
+        stage('Verification') {
           steps {
             parallel firstBranch: {
               node('linux') {
