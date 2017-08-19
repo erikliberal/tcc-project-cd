@@ -35,6 +35,7 @@ pipeline {
         }
         stage('Verifica aprovação') {
             steps {
+              params.entrySet().each{key,value->println "[$key] $value"}
               echo "${params.aprovado}, ${params.submitter}, ${params.justificativa}"
               verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
             }
