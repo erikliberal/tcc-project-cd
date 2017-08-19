@@ -11,6 +11,15 @@ def verificaAprovacao(aprovacao){
 pipeline {
     agent none
     stages {
+        stage ('Compilação e testes unitários') {
+          agent any
+          tools {
+              maven 'maven'
+          }
+          steps {
+              sh 'mvn clean test -Pcheck'
+          }
+        }
         stage('Build') {
           agent any
           tools {
@@ -18,6 +27,28 @@ pipeline {
           }
           steps {
               sh 'mvn clean install'
+          }
+        }
+        stage('Build') {
+          steps {
+            parallel firstBranch: {
+              node {
+                agent any
+                tools{
+                  maven 'maven'
+                }
+                sh 'mvn clean package'
+              }
+            }, secondBranch: {
+              node {
+                agent any
+                tools{
+                  maven 'maven'
+                }
+                sh 'mvn clean install -Preport'
+              }
+            },
+            failFast: false
           }
         }
         stage('Aguardando aprovação de testes manuais'){
