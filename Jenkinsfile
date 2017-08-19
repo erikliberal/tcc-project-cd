@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 def verificaAprovacao(aprovacao){
+  echo "$aprovacao.aprovado"
   if (aprovacao.aprovado){
     echo "Build aprovado por $aprovacao.submitter com a justificativa [$aprovacao.justificativa]"
   } else {
@@ -37,10 +38,8 @@ pipeline {
             echo "Ultima build durou ${currentBuild.durationString}"
         }
         success {
-            echo "Aprovado por ${params.submitter} Justificativa \'${params.justificativa}\'"
         }
         failure {
-            echo "Rejeitado por ${params.submitter} Justificativa \'${params.justificativa}\'"
         }
         unstable {
             echo 'unstable'
