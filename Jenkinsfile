@@ -10,10 +10,6 @@ def verificaAprovacao(aprovado, submitter, justificativa){
 
 pipeline {
     agent none
-    // parameters {
-    //    string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    //    booleanParam(name: 'aprovado', defaultValue: false, description: '')
-    // }
     stages {
         stage('Build') {
           agent any
