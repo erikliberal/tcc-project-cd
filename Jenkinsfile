@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def verificaAprovacao(aprovado, submitter, justificativa){
+verificaAprovacao(aprovado, submitter, justificativa){
   if ( aprovado ) {
       echo "Aprovado por $submitter devido a [$justificativa]"
   } else {
