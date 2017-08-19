@@ -37,10 +37,6 @@ pipeline {
         always {
             echo "Ultima build durou ${currentBuild.durationString}"
         }
-        success {
-        }
-        failure {
-        }
         unstable {
             echo 'unstable'
         }
