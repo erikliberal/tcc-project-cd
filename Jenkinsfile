@@ -29,8 +29,7 @@ pipeline {
                     ]
                 }
                 echo "$params"
-                echo "$submitter $aprovado $justificativa"
-                verificaAprovacao(aprovado, submitter, justificativa)
+                echo "[$submitter] [$aprovado] [$justificativa]"
             }
         }
     }
