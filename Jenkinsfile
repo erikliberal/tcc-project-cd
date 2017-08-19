@@ -22,17 +22,18 @@ pipeline {
           }
         }
         stage('Aguardando aprovação de testes manuais'){
-            parameters {
-                string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                booleanParam(name: 'aprovado', defaultValue: false, description: '')
-            }
             steps {
+                //parameters {
+                //    string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                //    booleanParam(name: 'aprovado', defaultValue: false, description: '')
+                //}
                 timeout(time: 1, unit: 'HOURS') {
                     input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
                         text(defaultValue: '-', description: '', name: 'justificativa'),
                         booleanParam(defaultValue: false, description: '', name: 'aprovado')
                     ]
-                    verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
+                    echo "$params"
+                    //verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
                 }
             }
         }
