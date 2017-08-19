@@ -29,7 +29,9 @@ pipeline {
             }
         }
         stage('Após aprovação'){
-            verificaUpload(params.aprovado)
+            steps {
+              verificaUpload(params.aprovado)
+            }
         }
     }
 
