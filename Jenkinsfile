@@ -1,11 +1,10 @@
 #!/usr/bin/env groovy
 
 def verificaAprovacao(aprovacao){
-  echo "$aprovacao.aprovado"
-  if (aprovacao.aprovado){
-    echo "Build aprovado por $aprovacao.submitter com a justificativa [$aprovacao.justificativa]"
-  } else {
+  if (!aprovacao.aprovado){
+    echo "Criar ticket de erro no issue tracker com a justificativa"
     error "Build rejeitado por $aprovacao.submitter com a justificativa [$aprovacao.justificativa]"
+  } else {
   }
 }
 
