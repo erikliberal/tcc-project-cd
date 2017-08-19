@@ -10,7 +10,10 @@ verificaAprovacao(aprovado, submitter, justificativa){
 
 pipeline {
     agent none
-
+    parameters {
+       string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+       booleanParam(name: 'aprovado', defaultValue: false, description: '')
+    }
     stages {
         stage('Build') {
           agent any
@@ -23,10 +26,6 @@ pipeline {
         }
         stage('Aguardando aprovação de testes manuais'){
             steps {
-                //parameters {
-                //    string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                //    booleanParam(name: 'aprovado', defaultValue: false, description: '')
-                //}
                 timeout(time: 1, unit: 'HOURS') {
                     input message: 'Aprovar', submitterParameter: 'submitter', parameters: [
                         text(defaultValue: '-', description: '', name: 'justificativa'),
