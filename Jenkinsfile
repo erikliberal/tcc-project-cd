@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Aguardando aprovação de testes manuais'){
             parameters {
-                string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?'),
+                string(name: 'justificativa', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
                 booleanParam(name: 'aprovado', defaultValue: false, description: '')
             }
             steps {
