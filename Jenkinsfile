@@ -30,21 +30,16 @@ pipeline {
           }
         }
         stage('Verification') {
+          tools{
+            maven 'maven'
+          }
           steps {
             parallel firstBranch: {
               node('linux') {
-                agent any
-                tools{
-                  maven 'maven'
-                }
                 sh 'mvn clean package'
               }
             }, secondBranch: {
               node('linux') {
-                agent any
-                tools{
-                  maven 'maven'
-                }
                 sh 'mvn clean install -Preport'
               }
             },
