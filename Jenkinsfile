@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
-verificaAprovacao(aprovado, submitter, justificativa){
+def verificaAprovacao(aprovado, submitter, justificativa){
+  echo "$aprovado, $submitter, $justificativa"
   if ( aprovado ) {
       echo "Aprovado por $submitter devido a [$justificativa]"
   } else {
@@ -18,7 +19,7 @@ pipeline {
               maven 'maven'
           }
           steps {
-              sh 'mvn clean install'
+              sh 'mvn install'
           }
         }
         stage('Aguardando aprovação de testes manuais'){
@@ -33,6 +34,7 @@ pipeline {
         }
         stage('Verifica aprovação') {
             steps {
+              echo "$params.aprovado, $params.submitter, $params.justificativa"
               verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
             }
         }
