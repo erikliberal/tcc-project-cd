@@ -29,13 +29,12 @@ pipeline {
                         text(defaultValue: '-', description: '', name: 'justificativa'),
                         booleanParam(defaultValue: false, description: '', name: 'aprovado')
                     ]
-                    echo "${params.aprovado}, ${params.submitter}, ${params.justificativa}"
                 }
             }
         }
         stage('Verifica aprovação') {
             steps {
-              echo "${params.aprovado}, ${params.submitter}, ${params.justificativa}"
+              echo "$params.aprovado, $params.submitter, $params.justificativa"
               verificaAprovacao(params.aprovado, params.submitter, params.justificativa)
             }
         }
