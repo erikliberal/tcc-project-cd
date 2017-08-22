@@ -26,10 +26,7 @@ pipeline {
               maven 'maven'
           }
           steps {
-              sh 'mvn clean deploy -f bom/pom.xml'
-              sh 'mvn clean deploy -f module-api/pom.xml'
-              sh 'mvn clean deploy -f module-impl/pom.xml'
-              sh 'mvn clean deploy -f webapp/pom.xml'
+              sh 'mvn clean deploy'
           }
         }
         stage('Aguardando aprovação de testes manuais'){

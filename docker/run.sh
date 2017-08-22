@@ -8,4 +8,4 @@ if [ "x$(docker volume ls | grep -o 'jenkins-data')x" == 'xx' ] ; then
     docker volume create --name jenkins-data
 fi
 docker run --name=jenkins --rm --link nexus:nexus -v jenkins-data:/var/jenkins_home -u root -d jenkins
-docker cp jenkins/settings.xml jenkins:/var/jenkins_home/settings.xml
+docker cp .m2 jenkins:/root/.m2
