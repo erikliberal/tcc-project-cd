@@ -29,28 +29,6 @@ pipeline {
               sh 'mvn clean install'
           }
         }
-        stage('Verification') {
-          steps {
-            parallel firstBranch: {
-              agent any
-                tools{
-                  maven 'maven'
-                }
-              node('linux') {
-                sh 'mvn clean package'
-              }
-            }, secondBranch: {
-              agent any
-                tools{
-                  maven 'maven'
-                }
-              node('linux') {
-                sh 'mvn clean install -Preport'
-              }
-            },
-            failFast: false
-          }
-        }
         stage('Aguardando aprovação de testes manuais'){
             steps {
                 timeout(time: 1, unit: 'HOURS') {

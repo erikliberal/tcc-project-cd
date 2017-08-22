@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <servers>
+        <server>
+            <id>releases</id>
+            <username>local-user-deployer</username>
+            <password>senhasenha</password>
+        </server>
+        <server>
+            <id>snapshots</id>
+            <username>local-user-deployer</username>
+            <password>senhasenha</password>
+        </server>
+
+    </servers>
+
+    <mirrors>
+        <mirror>
+            <id>local-releases</id>
+            <mirrorOf>releases</mirrorOf>
+            <url>http://nexus:8081/repository/erikliberal-releases</url>
+        </mirror>
+        <mirror>
+            <id>local-snapshots</id>
+            <mirrorOf>snapshots</mirrorOf>
+            <url>http://nexus:8081/repository/erikliberal-snapshots</url>
+        </mirror>
+
+        <mirror>
+            <id>local-nexus</id>
+            <mirrorOf>*</mirrorOf>
+            <url>http://nexus:8081/repository/maven-public/</url>
+        </mirror>
+    </mirrors>
+
+
+    <profiles>
+        <profile>
+            <id>local-nexus</id>
+
+            <properties>
+                <nexusReleasesPath>http://nexus:8081/repository/erikliberal-releases</nexusReleasesPath>
+                <nexusSnapshotsPath>http://nexus:8081/repository/erikliberal-snapshots</nexusSnapshotsPath>
+                <nexusPublicPath>http://nexus:8081/repository/maven-public/</nexusPublicPath>
+            </properties>
+
+            <repositories>
+                <repository>
+                    <id>local-nexus-releases</id>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <url>http://nexus:8081/repository/erikliberal-releases</url>
+                </repository>
+                <repository>
+                    <id>local-nexus-snapshots</id>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <url>http://nexus:8081/repository/erikliberal-snapshots</url>
+                </repository>
+                <repository>
+                    <id>central</id>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <url>http://nexus:8081/repository/maven-public/</url>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://nexus:8081/repository/maven-public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>local-nexus</activeProfile>
+    </activeProfiles>
+</settings>
