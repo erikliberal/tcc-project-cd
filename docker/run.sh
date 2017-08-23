@@ -13,9 +13,9 @@ echo "gitlab [ $(docker run -d --rm --name gitlab -e GITLAB_ROOT_PASSWORD='erikl
 if [ "x$(docker volume ls | grep -o 'nexus-data')x" == 'xx' ] ; then
   docker volume create --name nexus-data
 fi
-docker run -d --rm --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+echo "nexus [ $(docker run -d --rm --name nexus -v nexus-data:/nexus-data sonatype/nexus3) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus) >"
 if [ "x$(docker volume ls | grep -o 'jenkins-data')x" == 'xx' ] ; then
     docker volume create --name jenkins-data
 fi
-docker run --name=jenkins --rm --link nexus:nexus -v jenkins-data:/var/jenkins_home -u root -d jenkins
+echo "jenkins [ $( docker run --name=jenkins --rm --link gitlab:gitlab --link nexus:nexus -v jenkins-data:/var/jenkins_home -u root -d jenkins ) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jenkins) >"
 docker cp .m2 jenkins:/root/.m2
