@@ -20,5 +20,5 @@ if [ "x$(docker volume ls | grep -o 'jenkins-data')x" == 'xx' ] ; then
     echo 'Criando volume para persistir os dados do jenkins entre inicializações'
     docker volume create --name jenkins-data
 fi
-echo "jenkins [ $( docker run --name=jenkins --rm --link gitlab:gitlab --link nexus:nexus -v jenkins-data:/var/jenkins_home -u root -d jenkins ) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jenkins) >"
-docker cp .m2 jenkins:/root/.m2
+echo "jenkins [ $( docker run -d --rm --name=jenkins --link gitlab:gitlab --link nexus:nexus -v jenkins-data:/var/jenkins_home jenkins/jenkins:2.60.2 ) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jenkins) >"
+#docker cp .m2 jenkins:/root/.m2
