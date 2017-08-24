@@ -21,7 +21,7 @@ if [ "x$(docker volume ls | grep -o 'nexus-data')x" == 'xx' ] ; then
   echo 'Criando volume para persistir os dados do nexus entre inicializações'
   docker volume create --name nexus-data
 fi
-echo "nexus [ $(docker run -d --rm --name nexus --ip 172.19.0.3 --network $user_created_network_name --network-alias nexus -v nexus-data:/nexus-data sonatype/nexus3) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus) >"
+echo "nexus [ $(docker run -d --rm --name nexus --ip 172.19.0.3 --network $user_created_network_name --network-alias nexus -v nexus-data:/nexus-data sonatype/nexus3:3.5.0) ] on ip < $(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus) >"
 
 if [ "x$(docker volume ls | grep -o 'jenkins-data')x" == 'xx' ] ; then
     echo 'Criando volume para persistir os dados do jenkins entre inicializações'
